@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nostra App</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="header">
+        <p>Fake Shop</p>
+    </div>
+    <div class="navbar">
+        <button class="button" onClick="window.location.reload();">Cambia immagine</button>
+    </div>
+    <div class="container">
+        <div class="img_container">
+            <img class="img" id="image" src="https://picsum.photos/300/200">
+        </div>
+        <div class="filters_container">
+            <!-- 
+                label e input hanno di default un display: inline, 
+                quindi di norma si allineano.
+            -->
+            <div class="filter">
+                <label for="">Sepia:</label>
+                <input type="range" id="sepiaRange" min="0" max="100" value="0">
+            </div>
+            <div class="filter">
+                <label for="">Grayscale:</label>
+                <input type="range" id="grayscaleRange" min="0" max="100" value="0">
+            </div>
+            <div class="filter">
+                <label for="">Blur:</label>
+                <input type="range" id="blurRange" min="0" max="10" value="0">
+            </div>
+            <div class="filter">
+                <label for="">Brightness:</label>
+                <input type="range" id="brightnessRange" min="0" max="200" value="100">
+            </div>
+            <div class="filter">
+                <label for="">Contrast:</label>
+                <input type="range" id="contrastRange" min="0" max="200" value="100">
+            </div>
+            <div class="filter">
+                <label for="">Saturation:</label>
+                <input type="range" id="saturationRange" min="0" max="200" value="100">
+            </div>
+        </div>
+    </div>
+    <script src="./script.js"></script>
+</body>
+</html>

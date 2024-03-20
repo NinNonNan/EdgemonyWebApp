@@ -1,0 +1,81 @@
+* {
+    margin:0;
+    border:0;
+    box-sizing: border-box
+}
+/* 
+    Azzero margin, border e box-sizing per tutta l'app.
+*/
+
+body {
+    background-color: #535353;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: #fff;
+    /*
+        da non fare mai
+    */
+    display:flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.header, .navbar {
+    border: 1px solid #494949;
+    padding:5px 10px;
+}
+
+.button {
+    background-color: #494949;
+    color:#fff;
+    padding: 5px 10px;
+    border: 1px solid #252525
+}
+
+.container {
+    display: flex;
+    /*
+        border: 1px solid red;
+    */
+    flex-grow:1;
+}
+
+/*
+    con display:flex il container allinea i figli orizzantalmente in automatico.
+*/
+
+.img_container {
+    width: 100%;
+    /*
+        background-color: yellow;
+        border: 1px solid red;
+    */
+    background-color: #282828;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.filters_container {
+    width: 300px;
+    /* 
+        background-color: green;
+        border: 1px solid red;
+    */
+}
+
+/* 
+    in fase di sviluppo è molto comodo farti un pò di debug con bordi o sfondi
+    colorati per i vari elementi.
+*/
+
+.filter {
+    /*
+        border: 1px solid red;
+        margin-bottom: 20px;
+        margin-left: 10px;
+        margin-right: 10px;
+    */
+    margin: 0px 20px 10px 10px;
+    display:flex;
+    flex-direction: column;
+}
