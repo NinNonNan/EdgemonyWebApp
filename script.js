@@ -1,21 +1,42 @@
 console.log("Qualsiasi cosa");
 
+// STEP 1: getElementById
+const changeImageButton = document.getElementById("changeImageButton");
+const imageElement = document.getElementById("image");
 const sepiaRange = document.getElementById("sepiaRange");
 const grayscaleRange = document.getElementById("grayscaleRange");
 const blurRange = document.getElementById("blurRange");
 const brightnessRange = document.getElementById("brightnessRange");
 const contrastRange = document.getElementById("contrastRange");
 const saturationRange = document.getElementById("saturationRange");
-const imageElement = document.getElementById("image");
+const toggleFilter = document.getElementById('toggleFilter');
 
-sepiaRange.addEventListener("input",updateFilter);
-grayscaleRange.addEventListener("input",updateFilter);
-blurRange.addEventListener("input",updateFilter);
-brightnessRange.addEventListener("input",updateFilter);
-contrastRange.addEventListener("input",updateFilter);
-saturationRange.addEventListener("input",updateFilter);
+// STEP 2: variabili
+let isActive = true;
 
-function updateFilter(){
+// STEP 3: eventi
+changeImageButton.addEventListener('click', changeImage);
+sepiaRange.addEventListener("input",updateFilters);
+grayscaleRange.addEventListener("input",updateFilters);
+blurRange.addEventListener("input",updateFilters);
+brightnessRange.addEventListener("input",updateFilters);
+contrastRange.addEventListener("input",updateFilters);
+saturationRange.addEventListener("input",updateFilters);
+toggleFilter.addEventListener('change', switchFilters);
+
+// STEP 4: funzioni
+function changeImage() {
+    const randomImageId = Math.floor(Math.random() * 1000) + 1;
+    const imageUrl = `https://picsum.photos/id/${randomImageId}/640/480`;
+    imageElement.src = imageUrl;
+    isActive = true;
+    toggleFilter.checked = false;
+    // aggiungerlo dopo aver creato il metodo resetFilters
+    resetFilters();
+}
+
+function updateFilters(){
+
     const sepiaValue = sepiaRange.value;
     const grayscaleValue = grayscaleRange.value;
     const blurValue = blurRange.value;
@@ -23,27 +44,27 @@ function updateFilter(){
     const contrastValue = contrastRange.value;
     const saturationValue = saturationRange.value;
 
+    const filters = `sepia(${sepiaValue}%) grayscale(${grayscaleValue}%) blur(${blurValue}px) brightness(${brightnessValue}%) contrast(${contrastValue}%) saturate(${saturationValue}%)`;
 
-    const filter = 
-        `sepia(${sepiaValue}%)
-        grayscale(${grayscaleValue}%)
-        blur(${blurValue}px)
-        brightness(${brightnessValue}%)
-        contrast(${contrastValue}%)
-        saturate(${saturationValue}%)`;
+        // STEP 5: Condizioni - attenzione al ternario!!!
+        imageElement.style.filter = isActive ? filters : 'none';
 
-
-    //const filter = `sepia(${sepiaValue}%)`;
-    //const filter = `grayscale(${grayscaleValue}%)`;
-    //const filter = `blur(${blurValue}px)`;
-    //const filter = `brightness(${brightnessValue}%)`;
-    //const filter = `contrast(${contrastValue}%)`;
-    //const filter = `saturate(${saturationValue}%)`;
+    }
     
+    function resetFilters() {
+        sepiaRange.value = 0;
+        grayscaleRange.value = 0;
+        blurRange.value = 0;
+        brightnessRange.value = 100;
+        contrastRange.value = 100;
+        saturationRange.value = 100;
+        imageElement.style.filter = 'none';
+    }
 
-    imageElement.style.filter = filter;
-    console.log.clear;
-    console.log("Image filter:" + imageElement.style.filter);
-    console.log(filter);
-}
+    function switchFilters() {
+        isActive = !isActive;
+        updateFilters();
+    }
+
+    changeImage();
 
