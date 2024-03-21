@@ -100,7 +100,7 @@ input[type="range"]::-moz-range-thumb {
 }
 
 /*
-    con display:flex il container allinea i figli orizzantalmente in automatico.
-    in fase di sviluppo è molto comodo farti un pò di debug con bordi o sfondi
+    Con display:flex il container allinea i figli orizzantalmente in automatico.
+    In fase di sviluppo è molto comodo farti un pò di debug con bordi o sfondi
     colorati per i vari elementi.
 */
