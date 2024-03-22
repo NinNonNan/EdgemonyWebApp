@@ -2,7 +2,10 @@ console.log("Qualsiasi cosa");
 
 // STEP 1: getElementById
 const changeImageButton = document.getElementById('changeImageButton');
+const downloadOriginalImageButton = document.getElementById('downloadOriginalImage');
+// Aggiungi l'evento click al pulsante per scaricare l'immagine con i filtri applicati
 const downloadFilteredImageButton = document.getElementById('downloadFilteredImage');
+
 
 const imageElement = document.getElementById('image');
 const sepiaRange = document.getElementById('sepiaRange');
@@ -21,7 +24,8 @@ let isSnyder = false;
 
 // STEP 3: eventi
 changeImageButton.addEventListener('click', changeImage);
-downloadFilteredImageButton.addEventListener('click',downloadFilteredImage);
+downloadOriginalImageButton.addEventListener('click',downloadOriginalImage);
+downloadFilteredImageButton.addEventListener('click', downloadFilteredImage);
 
 sepiaRange.addEventListener('input',updateFilters);
 grayscaleRange.addEventListener('input',updateFilters);
@@ -37,7 +41,7 @@ addSnyderFilter.addEventListener('change',snyderFilter);
 function changeImage() {
     const randomImageId = Math.floor(Math.random() * 1000) + 1;
     //const imageUrl = `https://picsum.photos/id/${randomImageId}/640/480`;
-    const imageUrl = `https://cors-anywhere.herokuapp.com/https://picsum.photos/id/${randomImageId}/640/480`;
+    const imageUrl = `https://picsum.photos/id/${randomImageId}/640/480`;
     imageElement.src = imageUrl;
     isActive = true;
     toggleFilter.checked = false;
@@ -87,30 +91,50 @@ function snyderFilter() {
     updateFilters();
     }
 
-function downloadFilteredImage() {
+function downloadOriginalImage() {
+    // Crea un link per aprire l'immagine in una nuova pagina
+    var link = document.createElement('a');
+    link.href = imageElement.src; // Ottieni l'URL dell'immagine originale
+    link.target = '_blank'; // Apri il link in una nuova pagina
+    // Aggiungi un testo di fallback nel caso il link non funzioni correttamente
+    link.textContent = "Clicca qui per visualizzare l'immagine";
+    // Aggiungi il link al DOM
+    document.body.appendChild(link);
+    // Simula un clic sul link per aprirlo nella nuova pagina
+    link.click();
+    // Rimuovi il link dal DOM
+    document.body.removeChild(link);
+    }
 
-    // Seleziona l'elemento del'immagine originale
-    
-    var canvas = document.createElement('canvas');
+function downloadFilteredImage() {
+    // Crea un canvas temporaneo
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+
+    // Imposta le dimensioni del canvas come le dimensioni dell'immagine
     canvas.width = imageElement.width;
     canvas.height = imageElement.height;
 
-    var ctx = canvas.getContext('2d');
-
-    var stileComputed = window.getComputedStyle(imageElement);
-    var filtro = stileComputed.getPropertyValue('filter');
-    ctx.filter = filtro; // Applica lo stesso filtro sull'immagin
-
-    // Disegna l'immagine con il filtro applicato sul canvas
+    // Disegna l'immagine sull'canvas con i filtri applicati
+    ctx.filter = imageElement.style.filter;
     ctx.drawImage(imageElement, 0, 0);
 
-    // Crea un link per il download
-    var link = document.createElement('a');
-    link.download = 'immagine_filtrata.jpg'; // Nome del file da scaricare
-    // Converti il canvas in un URL di dati
-    link.href = canvas.toDataURL('image/jpeg');
-    // Clicca automaticamente sul link per avviare il download
+    // Converti il canvas in un URL dati
+    const dataURL = canvas.toDataURL('image/png');
+
+    // Crea un link per scaricare l'immagine
+    const link = document.createElement('a');
+    link.href = dataURL;
+    link.download = 'filtered_image.png'; // Imposta il nome del file da scaricare
+
+    // Aggiungi il link al DOM
+    document.body.appendChild(link);
+
+    // Simula un clic sul link per avviare il download
     link.click();
+
+    // Rimuovi il link dal DOM
+    document.body.removeChild(link);
     }
 
     changeImage();
